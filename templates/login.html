@@ -1,0 +1,62 @@
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="welcome-side">
+        <div class="company-name">login</div>
+        
+        <div class="welcome-title">
+            Welcome to<br>
+            Your New<br>
+            <span>Company</span>
+        </div>
+        
+        <p class="welcome-text">
+            We're excited to have you on board! Join thousands of professionals who trust us to grow their business. 
+            Our platform provides all the tools you need to succeed in today's competitive market.
+            Start your journey with us today and experience the difference.
+        </p>
+        
+        {% comment %} <a href="#" class="learn-more">LEARN MORE →</a> {% endcomment %}
+    </div>
+
+    <div class="register-side">
+        <div class="form-container">
+            <h2>login</h2>
+
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'login' %}" autocomplete="off">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Choose a username"  value="{{ form.username|default_if_none:'' }}"
+                            required autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Create a password" required  autocomplete="off">
+                </div> 
+
+                
+                <button type="submit" class="btn-register">Login</button>
+
+                <div class="login-link">
+                    <p>go too homepage <a href="{% url 'register' %}">Login here</a></p>  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

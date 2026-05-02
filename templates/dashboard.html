@@ -1,0 +1,142 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>front dashboard</title>
+</head>
+<body>
+    <div class="top_one">
+        <p class="second"> Your Dashboard</p>
+        <div class="third">
+       
+
+            <table>
+                <thead>
+                    <tr> 
+                        <th> sl no</th>
+                        <th> users </th>
+                        <th> projects </th>
+                        <th> tasks </th>
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+
+        
+
+    </div>
+    <script src="projects.js"> </script>
+</body>
+</html> -->
+
+
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #F2F2F2;
+        }
+
+        .header {
+            background: #003366;
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-top: 10px;
+            background: #28A745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input {
+            padding: 8px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    Your Dashboard
+</div>
+
+<div style="padding:20px;">
+    
+    <!-- Create Project -->
+    <input type="text" id="projectName" placeholder="Enter Project Name">
+    <button onclick="createProject()">Add Project</button>
+
+    <!-- Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Serial No</th>
+                <th>Owner</th>
+                <th>Project Name</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody id="projectTable">
+        </tbody>
+    </table>
+
+</div>
+
+<script src={% static "js/projects.js" %}></script>
+
+</body>
+</html>
+
+
+{% endblock %}
+
+{% comment %} <div class="welcome-side">
+        <div class="company-name">Dashboard</div>
+        
+        <div class="welcome-title">
+            Welcome to<br>
+            Your New<br>
+            <span>Company</span>
+        </div>
+        <form method="POST" action="{% url 'dashboard' %}" autocomplete="off">
+            {% csrf_token %}
+                <div class="company-name">
+                    {{form.username}}
+                </div>
+                <button type="submit" class="btn-register">Logout</button>
+                <div >
+                    <p>go too homepage <a href="{% url 'logout' %}">Login here</a></p>  
+                </div>
+        </form>
+
+
+        
+    </div> {% endcomment %}
