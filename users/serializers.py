@@ -21,7 +21,17 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         model = Users
                 # fields = '__all__'
         fields = ['username','email','password','role']
-
+        extra_kwargs = {
+            "password":{"write_only":True}
+            }
+        
+        def new_get(self, validated_data):
+            user = Users.objects.create(**validated_data)
+            user.set_password(validated_data['password'])   # hiding the passwords
+            user.save()
+            return user
+        
+      
         
 
 
@@ -31,23 +41,23 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
         
-    def create(self, validated_data):
-        user = Users.objects.create_user(**validated_data)
-        role =  validated_data.pop('role')
-        user.is_active = False
-        user.save()
+    # def create(self, validated_data):
+    #     user = Users.objects.create_user(**validated_data)
+    #     role =  validated_data.pop('role')
+    #     user.is_active = False
+    #     user.save()
             
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = token_generator.make_token(user)
+    #     uid = urlsafe_base64_encode(force_bytes(user.pk))
+    #     token = token_generator.make_token(user)
             
             
-        activation_link = f"http://127.0.0.1:8000/api/activate/{uid}/{token}/"
+    #     activation_link = f"http://127.0.0.1:8000/api/activate/{uid}/{token}/"
             
-        send_mail(
-            "activatate your account",
-            f"click_here:{activation_link}",
-            "chets123@gmail.com",
-            [user.email]
-        )
+    #     send_mail(
+    #         "activatate your account",
+    #         f"click_here:{activation_link}",
+    #         "chets123@gmail.com",
+    #         [user.email]
+    #     )
 
-        return user
+    #     return user
