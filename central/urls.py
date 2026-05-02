@@ -37,7 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('accounts.urls')),
     path('api/',include('tasks.urls')),
-    path('api/atasks/',include(router.urls)),
+    path('api/new/',include(router.urls)),
     path('api/login/', TokenObtainPairView.as_view(), name='login_api'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh_api'),
         # path('login/', views.login_view, name='login'),

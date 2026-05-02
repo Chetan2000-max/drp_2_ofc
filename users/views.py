@@ -17,7 +17,7 @@ from rest_framework import status
 class UserViewSet(ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UserRegisterSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get_permissions(self):
         if self.action == "create":
