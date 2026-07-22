@@ -40,6 +40,12 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'drp-2-ofc.onrender.com']
 
 
 
+
+
+
+
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -149,11 +155,14 @@ DATABASES = {
 
 
 ## deploy env
+import os
 import dj_database_url
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL")
+    'default': dj_database_url.config(
+        # Read the environment variable live, fallback to local string if empty
+        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:root@123@localhost:5432/pokemon'),
+        conn_max_age=600
     )
 }
 ##
