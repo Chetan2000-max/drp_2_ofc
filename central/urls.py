@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from users.views import UserViewSet
+# from subscribe.views import PlanViewSet
+from users.views import UserViewSet, api_login
 from rest_framework.viewsets import ModelViewSet
 from projects.views import ProjectViewSet
 from tasks.views import TasksViewSet
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from accounts import views
 
 
@@ -31,15 +32,18 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user')
 router.register(r'projects',ProjectViewSet, basename='projects')
 router.register(r'tasks', TasksViewSet, basename='tasks')
+# router.register(r'plans', PlanViewSet, basename='plans')
 
 urlpatterns = [
     # function or page urls
     path('admin/', admin.site.urls),
     path('',include('accounts.urls')),
     path('api/',include('tasks.urls')),
+    # path('api/plans/',include('plans.urls')),
     path('api/new/',include(router.urls)),
-    path('api/login/', TokenObtainPairView.as_view(), name='login_api'),
+    path('api/login/', api_login, name='login_api'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh_api'),
-        # path('login/', views.login_view, name='login'),
+        # path('login/', views.login_view, name='login'),        
 
 ]

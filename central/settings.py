@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'tasks',
     'accounts',
     'django_filters',
-    'corsheaders'
+    'corsheaders',
+    # 'subscribe',
+    # 'plans'
 ]
 
 
@@ -75,16 +77,18 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' :(
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-        
-}
-
-REST_FRAMEWORK = {
+    
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ]
+        
 }
+
+
+    
+
 
 
 TEMPLATES = [
@@ -119,7 +123,7 @@ DATABASES = {
     'default':{
         'ENGINE':'django.db.backends.postgresql',
         'NAME':'pokemon',
-        'USER':'postgres',
+        'USER':'postgres',  # username 
         'PASSWORD':'root@123',
         'HOST':'localhost',  
         'PORT':'5432' # port number connection

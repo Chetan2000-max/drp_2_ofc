@@ -15,29 +15,54 @@ token_generator = PasswordResetTokenGenerator()
 
 
 
-class UserRegisterSerializer(serializers.ModelSerializer):
-    # role = serializers.CharField(source = 'user.role')
-    class Meta:
-        model = Users
-                # fields = '__all__'
-        fields = ['username','email','password','role']
-        extra_kwargs = {
-            "password":{"write_only":True}
-            }
+# class UserRegisterSerializer(serializers.ModelSerializer):
+#     # role = serializers.CharField(source = 'user.role')
+#     class Meta:
+#         model = Users
+#                 # fields = '__all__'
+#         fields = ['username','email','password','role']
+#         extra_kwargs = {
+#             "password":{"write_only":True}
+#             }
         
-        def new_get(self, validated_data):
-            user = Users.objects.create(**validated_data)
-            user.set_password(validated_data['password'])   # hiding the passwords
-            user.save()
-            return user
+#         def new_get(self, validated_data):
+#             user = Users.objects.create(**validated_data)
+#             user.set_password(validated_data['password'])   # hiding the passwords
+#             user.save()
+#             return user
         
       
         
 
 
+class UserRegisterSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Users
+        fields = ["username", "email", "password", "role", "is_active","mobile_number"]
 
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
 
+    def create(self, validated_data):
+        user = Users.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+            role=validated_data.get("role", "user"),
+            mobile_number=validated_data.get("mobile_number")
+        )
+
+        return user
+
+    def profile_update(self, instace, validated_data):
+        instace.username = validated_data.get("username", instace.username)
+        instace.email = validated_data.get("email", instace.email)
+        instace.mobilenumber = validated_data.get("mobile_number", instace.mobile_number)
+    
 
 
         

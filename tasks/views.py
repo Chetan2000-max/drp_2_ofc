@@ -15,9 +15,14 @@ class TasksViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
      
     filter_backends= [DjangoFilterBackend,SearchFilter,OrderingFilter]
-    fielterset_fields = ['status','projects']
+    filterset_fields = ['status','projects']
     search_fields = ['title']
     ordering_fields = ['id','title']
+    
+    def get_queryset(self):
+        return Tasks.objects.filter(
+            assigned_to=self.request.user
+        )
     
     
     def perform_create(self, serializer):

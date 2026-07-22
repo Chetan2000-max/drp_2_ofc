@@ -19,6 +19,10 @@ def register_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
+        # mobile_no = request.POST.get('mobile')
+        
+        
+        
         
         
         if password != password2:
@@ -29,6 +33,22 @@ def register_view(request):
             messages.error(request, 'user is already exists')
             return render(request, 'register.html',{'form':request.POST})
         
+        # mobile number validation
+        # if not mobile_no.isdigit():
+        #     messages.error(request, 'Mobile number must contain only digits')
+        #     return render(request, 'register.html', {'form': request.POST})
+
+        # if len(mobile_no) != 10:
+        #     messages.error(request, 'Mobile number must be 10 digits')
+        #     return render(request, 'register.html', {'form': request.POST})
+
+        # if not mobile_no.startswith('9'):
+        #     messages.error(request, 'Mobile number must start with 9')
+        #     return render(request, 'register.html', {'form': request.POST})
+        
+        
+                             
+        
         try:
             user = User.objects.create_user(username=username, 
                                             password=password2, 
@@ -37,6 +57,7 @@ def register_view(request):
             user.save()
             messages.success(request, 'user successfully created!')
             return render(request,'register.html')
+        # new version of code 
             
             
         except Exception as e:
@@ -84,3 +105,7 @@ def logout_view(request):
     messages.success(request, 'u were logged out sir')
     return redirect('login')
 
+def profile_view(request,user):
+    if not user.is_authenticated:
+        messages.error(request,'u must be logged in to the profile vi')
+    return render(request, 'profile.html')

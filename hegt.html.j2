@@ -1,0 +1,10 @@
+from jinja2 import Template
+
+# Your data
+user_data = {"name": "Nikhil", "role": "Admin"}
+
+# The Jinja template string
+tmpl = Template("Hello {{ user.name }}, your role is: {{ user.role }}.")
+
+# Render the final output
+print(tmpl.render(user=user_data))
