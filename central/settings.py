@@ -158,14 +158,28 @@ DATABASES = {
 import os
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Read the environment variable live, fallback to local string if empty
-        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:root@123@localhost:5432/pokemon'),
-        conn_max_age=600
-    )
-}
-##
+
+
+# 1. Fetch your live database URL variable from Render's dashboard
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    # 2. If running live on Render, use the secure network string directly
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    }
+else:
+    # 3. If running locally on your PC, fallback to your local credentials
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'pokemon',
+            'USER': 'postgres',
+            'PASSWORD': 'root@123',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 
