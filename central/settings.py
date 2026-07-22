@@ -160,16 +160,23 @@ import dj_database_url
 
 
 
-# 1. Fetch your live database URL variable from Render's dashboard
-DATABASE_URL = os.environ.get('DATABASE_URL')
+import os
+import dj_database_url
 
-if DATABASE_URL:
-    # 2. If running live on Render, use the secure network string directly
+# 1. Check if we are running live on Render
+IS_RENDER = os.environ.get('RENDER')
+
+if IS_RENDER:
+    # 2. Live production settings on Render (Uses live URL + requires SSL)
     DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+        'default': dj_database_url.parse(
+            os.environ.get('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
 else:
-    # 3. If running locally on your PC, fallback to your local credentials
+    # 3. Local machine settings on your PC (No SSL required)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -180,6 +187,7 @@ else:
             'PORT': '5432',
         }
     }
+
 
 
 
