@@ -156,39 +156,32 @@ DATABASES = {
 
 ## deploy env
 import os
+import sys
 import dj_database_url
 
+# 1. Check if Render is currently building the application
+IS_BUILDING = 'RENDER' in os.environ and sys.argv and sys.argv[1] == 'collectstatic'
 
+# 2. Extract your database string safely
+database_url = os.environ.get('DATABASE_URL')
 
-import os
-import dj_database_url
-
-# 1. Check if we are running live on Render
-IS_RENDER = os.environ.get('RENDER')
-
-if IS_RENDER:
-    # 2. Live production settings on Render (Uses live URL + requires SSL)
+if IS_BUILDING or not database_url:
+    # Use a fake, in-memory database strictly for the build process
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
+else:
+    # Use your real database connection only when the app is running live
     DATABASES = {
         'default': dj_database_url.parse(
-            os.environ.get('DATABASE_URL'),
+            database_url,
             conn_max_age=600,
             ssl_require=True
         )
     }
-else:
-    # 3. Local machine settings on your PC (No SSL required)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'pokemon',
-            'USER': 'postgres',
-            'PASSWORD': 'root@123',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
-
-
 
 
 # Password validation
