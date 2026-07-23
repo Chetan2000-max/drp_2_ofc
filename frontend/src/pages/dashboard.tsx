@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import API from "../api/axios";
+// REMOVED UNUSED INSTANCE: import API from "../api/axios";
 import "./dashboard.css";
 
 type User = {
