@@ -35,7 +35,14 @@ import os
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'drp-2-ofc.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'drp-2-ofc.onrender.com',"https://drp-2-ofc-1.onrender.com"]
+
+
+
+## deployed one 
+# CORS_ALLOWED_ORIGINS = [
+#    "https://drp-2-ofc-1.onrender.com",]
+
 ##
 
 
@@ -182,6 +189,11 @@ else:
             ssl_require=True
         )
     }
+
+
+
+
+
 
 
 # Password validation
