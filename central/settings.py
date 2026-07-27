@@ -108,6 +108,13 @@ CORS_ALLOWED_ORIGINS = [
     "https://drp-2-ofc-1.onrender.com",
 ]
 
+# Allow toggling permissive CORS for quick testing via environment variable.
+# Set CORS_ALLOW_ALL_ORIGINS=True in your Render/production env only for debugging.
+CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
+
+# Allow credentials (cookies, auth) if needed
+CORS_ALLOW_CREDENTIALS = os.getenv("CORS_ALLOW_CREDENTIALS", "True") == "True"
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' :(
         'rest_framework_simplejwt.authentication.JWTAuthentication',
