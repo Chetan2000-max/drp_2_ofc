@@ -4,7 +4,7 @@ const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api/",
 });
 
-const skipAuthUrls = ["/login/", "/new/users/"];
+const skipAuthUrls = ["/login/", "new/users/"];
 
 const shouldAttachToken = (config: any) => {
   const token = localStorage.getItem("token");
